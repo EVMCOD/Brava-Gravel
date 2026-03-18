@@ -11,7 +11,7 @@ export default function IntegrationsPage() {
       <PageIntro
         eyebrow="Integrations"
         title="Connect BRAVA to Strava and future GPS providers"
-        description="This is the foundation for bringing in real activities, routes and ride history from external platforms instead of relying only on manual file uploads."
+        description="A clean, low-friction connection flow for bringing real activities, routes and ride history into BRAVA from Strava and, later, other GPS platforms."
       />
       <section className="px-6 pb-10 sm:px-8 lg:px-10">
         <IntegrationsPanel connections={connections} />

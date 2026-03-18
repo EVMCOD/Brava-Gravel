@@ -19,6 +19,20 @@ database.exec(`
     created_at TEXT NOT NULL
   );
 
+  CREATE TABLE IF NOT EXISTS external_connections (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    provider TEXT NOT NULL,
+    external_athlete_id TEXT,
+    status TEXT NOT NULL,
+    access_token TEXT,
+    refresh_token TEXT,
+    expires_at TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );
+
   CREATE TABLE IF NOT EXISTS uploaded_routes (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
@@ -73,6 +87,19 @@ export type UserRecord = {
   created_at: string;
 };
 
+export type ExternalConnection = {
+  id: string;
+  user_id: string;
+  provider: string;
+  external_athlete_id: string | null;
+  status: string;
+  access_token: string | null;
+  refresh_token: string | null;
+  expires_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export type StoredRoute = {
   id: string;
   user_id: string;
@@ -99,6 +126,38 @@ export function getDefaultUser(): UserRecord {
   `);
 
   return statement.get() as UserRecord;
+}
+
+export function listExternalConnections(userId: string): ExternalConnection[] {
+  const statement = database.prepare(`
+    SELECT *
+    FROM external_connections
+    WHERE user_id = ?
+    ORDER BY datetime(updated_at) DESC
+  `);
+
+  return statement.all(userId) as ExternalConnection[];
+}
+
+export function upsertExternalConnection(connection: ExternalConnection) {
+  const statement = database.prepare(`
+    INSERT INTO external_connections (
+      id, user_id, provider, external_athlete_id, status,
+      access_token, refresh_token, expires_at, created_at, updated_at
+    ) VALUES (
+      @id, @user_id, @provider, @external_athlete_id, @status,
+      @access_token, @refresh_token, @expires_at, @created_at, @updated_at
+    )
+    ON CONFLICT(id) DO UPDATE SET
+      status = excluded.status,
+      external_athlete_id = excluded.external_athlete_id,
+      access_token = excluded.access_token,
+      refresh_token = excluded.refresh_token,
+      expires_at = excluded.expires_at,
+      updated_at = excluded.updated_at
+  `);
+
+  statement.run(connection);
 }
 
 export function insertUploadedRoute(route: StoredRoute) {

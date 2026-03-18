@@ -33,6 +33,20 @@ database.exec(`
     FOREIGN KEY (user_id) REFERENCES users(id)
   );
 
+  CREATE TABLE IF NOT EXISTS imported_activities (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    provider TEXT NOT NULL,
+    external_activity_id TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL,
+    distance_km REAL NOT NULL,
+    elevation_gain_m INTEGER NOT NULL,
+    activity_date TEXT NOT NULL,
+    route_points TEXT NOT NULL DEFAULT '[]',
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );
+
   CREATE TABLE IF NOT EXISTS uploaded_routes (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
@@ -98,6 +112,19 @@ export type ExternalConnection = {
   expires_at: string | null;
   created_at: string;
   updated_at: string;
+};
+
+export type ImportedActivity = {
+  id: string;
+  user_id: string;
+  provider: string;
+  external_activity_id: string;
+  name: string;
+  distance_km: number;
+  elevation_gain_m: number;
+  activity_date: string;
+  route_points: string;
+  created_at: string;
 };
 
 export type StoredRoute = {
@@ -169,6 +196,37 @@ export function upsertExternalConnection(connection: ExternalConnection) {
   `);
 
   statement.run(connection);
+}
+
+export function upsertImportedActivity(activity: ImportedActivity) {
+  const statement = database.prepare(`
+    INSERT INTO imported_activities (
+      id, user_id, provider, external_activity_id, name,
+      distance_km, elevation_gain_m, activity_date, route_points, created_at
+    ) VALUES (
+      @id, @user_id, @provider, @external_activity_id, @name,
+      @distance_km, @elevation_gain_m, @activity_date, @route_points, @created_at
+    )
+    ON CONFLICT(external_activity_id) DO UPDATE SET
+      name = excluded.name,
+      distance_km = excluded.distance_km,
+      elevation_gain_m = excluded.elevation_gain_m,
+      activity_date = excluded.activity_date,
+      route_points = excluded.route_points
+  `);
+
+  statement.run(activity);
+}
+
+export function listImportedActivities(userId: string): ImportedActivity[] {
+  const statement = database.prepare(`
+    SELECT *
+    FROM imported_activities
+    WHERE user_id = ?
+    ORDER BY datetime(activity_date) DESC
+  `);
+
+  return statement.all(userId) as ImportedActivity[];
 }
 
 export function insertUploadedRoute(route: StoredRoute) {

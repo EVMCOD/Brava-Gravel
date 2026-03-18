@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { UiControls } from "@/components/ui-controls";
+import { UiControlsSlot } from "@/components/ui-controls-slot";
 
 const navigation = [
   { href: "/", label: "Home" },
@@ -31,7 +31,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               </Link>
             </div>
             <div className="flex flex-col gap-4 lg:items-end">
-              <UiControls />
+              <UiControlsSlot />
               <div className="flex flex-wrap items-center gap-4 text-sm text-stone-300">
                 {navigation.map((item) => (
                   <Link key={item.href} href={item.href} className="transition hover:text-white">

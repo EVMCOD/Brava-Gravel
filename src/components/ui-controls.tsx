@@ -1,9 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import { useUiState } from "@/components/ui-state";
 
 export function UiControls() {
   const { language, setLanguage, theme, toggleTheme } = useUiState();
+
+  useEffect(() => {
+    window.localStorage.setItem("brava-language", language);
+    window.localStorage.setItem("brava-theme", theme);
+    document.documentElement.dataset.theme = theme;
+  }, [language, theme]);
 
   return (
     <div className="flex items-center gap-3 text-xs sm:text-sm">

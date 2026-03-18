@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 
 type Language = "en" | "es";
 type Theme = "light" | "dark";
@@ -15,33 +15,9 @@ type UiStateContextValue = {
 
 const UiStateContext = createContext<UiStateContextValue | null>(null);
 
-function getInitialLanguage(): Language {
-  if (typeof window === "undefined") {
-    return "en";
-  }
-
-  const savedLanguage = window.localStorage.getItem("brava-language");
-  return savedLanguage === "es" ? "es" : "en";
-}
-
-function getInitialTheme(): Theme {
-  if (typeof window === "undefined") {
-    return "light";
-  }
-
-  const savedTheme = window.localStorage.getItem("brava-theme");
-  return savedTheme === "dark" ? "dark" : "light";
-}
-
 export function UiStateProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>(getInitialLanguage);
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    window.localStorage.setItem("brava-language", language);
-    window.localStorage.setItem("brava-theme", theme);
-  }, [language, theme]);
+  const [language, setLanguage] = useState<Language>("en");
+  const [theme, setTheme] = useState<Theme>("light");
 
   const value = useMemo(
     () => ({

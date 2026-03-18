@@ -176,7 +176,9 @@ export function GpxUploadForm() {
                 <div key={route.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="text-base font-semibold text-stone-950">{route.name}</p>
+                      <a href={`/routes/${route.id}`} className="text-base font-semibold text-stone-950 underline-offset-4 hover:underline">
+                        {route.name}
+                      </a>
                       <p className="mt-1 text-sm text-stone-500">{route.file_name}</p>
                     </div>
                     <p className="text-xs uppercase tracking-[0.2em] text-stone-400">

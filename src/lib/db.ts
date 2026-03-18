@@ -23,10 +23,18 @@ database.exec(`
     start_lon REAL,
     end_lat REAL,
     end_lon REAL,
+    route_points TEXT NOT NULL DEFAULT '[]',
     gpx_content TEXT NOT NULL,
     created_at TEXT NOT NULL
   )
 `);
+
+const columns = database.prepare("PRAGMA table_info(uploaded_routes)").all() as Array<{ name: string }>;
+const hasRoutePointsColumn = columns.some((column) => column.name === "route_points");
+
+if (!hasRoutePointsColumn) {
+  database.exec("ALTER TABLE uploaded_routes ADD COLUMN route_points TEXT NOT NULL DEFAULT '[]'");
+}
 
 export type StoredRoute = {
   id: string;
@@ -39,6 +47,7 @@ export type StoredRoute = {
   start_lon: number | null;
   end_lat: number | null;
   end_lon: number | null;
+  route_points: string;
   gpx_content: string;
   created_at: string;
 };
@@ -47,10 +56,10 @@ export function insertUploadedRoute(route: StoredRoute) {
   const statement = database.prepare(`
     INSERT INTO uploaded_routes (
       id, name, file_name, point_count, distance_km, elevation_gain_m,
-      start_lat, start_lon, end_lat, end_lon, gpx_content, created_at
+      start_lat, start_lon, end_lat, end_lon, route_points, gpx_content, created_at
     ) VALUES (
       @id, @name, @file_name, @point_count, @distance_km, @elevation_gain_m,
-      @start_lat, @start_lon, @end_lat, @end_lon, @gpx_content, @created_at
+      @start_lat, @start_lon, @end_lat, @end_lon, @route_points, @gpx_content, @created_at
     )
   `);
 
@@ -65,4 +74,15 @@ export function listUploadedRoutes(): StoredRoute[] {
   `);
 
   return statement.all() as StoredRoute[];
+}
+
+export function getUploadedRouteById(id: string): StoredRoute | null {
+  const statement = database.prepare(`
+    SELECT *
+    FROM uploaded_routes
+    WHERE id = ?
+    LIMIT 1
+  `);
+
+  return (statement.get(id) as StoredRoute | undefined) ?? null;
 }

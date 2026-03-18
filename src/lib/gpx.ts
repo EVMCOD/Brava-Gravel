@@ -8,7 +8,7 @@ export type ParsedGpxSummary = {
   endLon: number | null;
 };
 
-type TrackPoint = {
+export type TrackPoint = {
   lat: number;
   lon: number;
   ele: number | null;
@@ -33,7 +33,7 @@ function haversineDistanceMeters(a: TrackPoint, b: TrackPoint) {
   return 2 * EARTH_RADIUS_M * Math.asin(Math.sqrt(h));
 }
 
-function parseTrackPoints(gpxContent: string): TrackPoint[] {
+export function parseTrackPoints(gpxContent: string): TrackPoint[] {
   const matches = [...gpxContent.matchAll(/<trkpt[^>]*lat="([^"]+)"[^>]*lon="([^"]+)"[^>]*>([\s\S]*?)<\/trkpt>/g)];
 
   return matches

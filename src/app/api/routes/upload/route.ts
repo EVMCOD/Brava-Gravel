@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { insertUploadedRoute, listUploadedRoutes } from "@/lib/db";
 import { parseGpxSummary } from "@/lib/gpx";
+import { extractCompressedCoordinates, serializeCoordinates } from "@/lib/route-geometry";
 
 export async function GET() {
   const routes = listUploadedRoutes();
@@ -45,6 +46,7 @@ export async function POST(request: Request) {
     start_lon: summary.startLon,
     end_lat: summary.endLat,
     end_lon: summary.endLon,
+    route_points: serializeCoordinates(extractCompressedCoordinates(text)),
     gpx_content: text,
     created_at: new Date().toISOString(),
   };

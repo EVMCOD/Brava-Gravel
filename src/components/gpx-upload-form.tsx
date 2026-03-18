@@ -115,13 +115,14 @@ export function GpxUploadForm() {
         </label>
 
         <label className="mt-4 flex flex-col gap-3 text-sm text-stone-700">
-          <span className="font-medium">GPX file</span>
+          <span className="font-medium">Route file</span>
           <input
             name="gpxFile"
             type="file"
-            accept=".gpx,application/gpx+xml"
+            accept=".gpx,.tcx,.fit,application/gpx+xml"
             className="rounded-2xl border border-stone-300 bg-stone-50 px-4 py-4"
           />
+          <span className="text-xs text-stone-500">GPX supported now. TCX and FIT adapters are staged next.</span>
         </label>
 
         <button

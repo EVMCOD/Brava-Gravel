@@ -7,6 +7,7 @@ const navigation = [
   { href: "/lines", label: "Lines" },
   { href: "/rides", label: "Rides" },
   { href: "/upload", label: "Upload GPX" },
+  { href: "/builder", label: "Builder" },
   { href: "/integrations", label: "Integrations" },
   { href: "/profile", label: "Profile" },
 ];

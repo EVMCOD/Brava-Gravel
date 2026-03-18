@@ -3,6 +3,17 @@
 :root {
   --background: #f6f1e8;
   --foreground: #1c1917;
+  --app-bg: #f6f1e8;
+  --app-fg: #1c1917;
+  --shell-dark: #1f1c19;
+}
+
+:root[data-theme="dark"] {
+  --background: #161311;
+  --foreground: #f5f0e8;
+  --app-bg: #161311;
+  --app-fg: #f5f0e8;
+  --shell-dark: #0f0d0c;
 }
 
 @theme inline {
@@ -33,7 +44,8 @@ a {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
 }
 
@@ -41,7 +53,8 @@ button {
   cursor: pointer;
 }
 
-input {
+input,
+textarea {
   color: inherit;
 }
 

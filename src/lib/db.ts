@@ -62,6 +62,16 @@ database.exec(`
     FOREIGN KEY (route_id) REFERENCES uploaded_routes(id)
   );
 
+  CREATE TABLE IF NOT EXISTS ride_attendees (
+    id TEXT PRIMARY KEY,
+    ride_id TEXT NOT NULL,
+    user_id TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    UNIQUE(ride_id, user_id),
+    FOREIGN KEY (ride_id) REFERENCES rides(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );
+
   CREATE TABLE IF NOT EXISTS uploaded_routes (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
@@ -153,6 +163,13 @@ export type RideRecord = {
   capacity: number;
   notes: string | null;
   created_at: string;
+};
+
+export type RideWithStats = RideRecord & {
+  route_name: string;
+  route_distance_km: number;
+  route_elevation_gain_m: number;
+  attendee_count: number;
 };
 
 export type StoredRoute = {
@@ -269,15 +286,51 @@ export function insertRide(ride: RideRecord) {
   statement.run(ride);
 }
 
-export function listRides(userId: string): RideRecord[] {
+export function joinRide(rideId: string, userId: string) {
   const statement = database.prepare(`
-    SELECT *
-    FROM rides
-    WHERE user_id = ?
-    ORDER BY datetime(meetup_at) ASC
+    INSERT OR IGNORE INTO ride_attendees (id, ride_id, user_id, created_at)
+    VALUES (?, ?, ?, ?)
   `);
 
-  return statement.all(userId) as RideRecord[];
+  statement.run(`${rideId}_${userId}`, rideId, userId, new Date().toISOString());
+}
+
+export function listRides(userId: string): RideWithStats[] {
+  const statement = database.prepare(`
+    SELECT
+      rides.*,
+      uploaded_routes.name as route_name,
+      uploaded_routes.distance_km as route_distance_km,
+      uploaded_routes.elevation_gain_m as route_elevation_gain_m,
+      COUNT(ride_attendees.id) as attendee_count
+    FROM rides
+    JOIN uploaded_routes ON uploaded_routes.id = rides.route_id
+    LEFT JOIN ride_attendees ON ride_attendees.ride_id = rides.id
+    WHERE rides.user_id = ?
+    GROUP BY rides.id
+    ORDER BY datetime(rides.meetup_at) ASC
+  `);
+
+  return statement.all(userId) as RideWithStats[];
+}
+
+export function getRideById(id: string): RideWithStats | null {
+  const statement = database.prepare(`
+    SELECT
+      rides.*,
+      uploaded_routes.name as route_name,
+      uploaded_routes.distance_km as route_distance_km,
+      uploaded_routes.elevation_gain_m as route_elevation_gain_m,
+      COUNT(ride_attendees.id) as attendee_count
+    FROM rides
+    JOIN uploaded_routes ON uploaded_routes.id = rides.route_id
+    LEFT JOIN ride_attendees ON ride_attendees.ride_id = rides.id
+    WHERE rides.id = ?
+    GROUP BY rides.id
+    LIMIT 1
+  `);
+
+  return (statement.get(id) as RideWithStats | undefined) ?? null;
 }
 
 export function insertUploadedRoute(route: StoredRoute) {

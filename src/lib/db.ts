@@ -103,21 +103,17 @@ if (!hasUserIdColumn) {
   database.exec("ALTER TABLE uploaded_routes ADD COLUMN user_id TEXT NOT NULL DEFAULT 'user_demo_1'");
 }
 
-const existingUserCount = database.prepare("SELECT COUNT(*) as count FROM users").get() as { count: number };
+const seedUser = database.prepare(`
+  INSERT OR IGNORE INTO users (id, name, home_region, created_at)
+  VALUES (@id, @name, @home_region, @created_at)
+`);
 
-if (existingUserCount.count === 0) {
-  const seedUser = database.prepare(`
-    INSERT INTO users (id, name, home_region, created_at)
-    VALUES (@id, @name, @home_region, @created_at)
-  `);
-
-  seedUser.run({
-    id: "user_demo_1",
-    name: "Enrique",
-    home_region: "Madrid",
-    created_at: new Date().toISOString(),
-  });
-}
+seedUser.run({
+  id: "user_demo_1",
+  name: "Enrique",
+  home_region: "Madrid",
+  created_at: new Date().toISOString(),
+});
 
 export type UserRecord = {
   id: string;

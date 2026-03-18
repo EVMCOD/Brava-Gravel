@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 type UploadResult = {
   success: boolean;
@@ -43,8 +43,8 @@ async function fetchStoredRoutes() {
 }
 
 export function GpxUploadForm() {
-  const initialRoutes = useMemo(() => fetchStoredRoutes(), []);
-  const [routes, setRoutes] = useState<StoredRoute[]>(use(initialRoutes));
+  const [routes, setRoutes] = useState<StoredRoute[]>([]);
+  const [routesLoaded, setRoutesLoaded] = useState(false);
   const [status, setStatus] = useState<string>("Upload a GPX file to extract route stats.");
   const [result, setResult] = useState<UploadResult["data"]>();
   const [uploading, setUploading] = useState(false);
@@ -52,7 +52,16 @@ export function GpxUploadForm() {
   async function loadRoutes() {
     const nextRoutes = await fetchStoredRoutes();
     setRoutes(nextRoutes);
+    setRoutesLoaded(true);
   }
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      void loadRoutes();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -172,7 +181,9 @@ export function GpxUploadForm() {
           </div>
 
           <div className="mt-5 space-y-3">
-            {routes.length > 0 ? (
+            {!routesLoaded ? (
+              <p className="text-sm leading-7 text-stone-600">Loading saved routes...</p>
+            ) : routes.length > 0 ? (
               routes.map((route) => (
                 <div key={route.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
                   <div className="flex items-start justify-between gap-3">

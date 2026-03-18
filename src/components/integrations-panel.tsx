@@ -79,7 +79,7 @@ export function IntegrationsPanel({
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d7b98e]">Simple connection flow</p>
             <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">
-              Bring your real rides into BRAVA with almost no friction.
+              Bring your real Girona and Costa Brava rides into BRAVA with almost no friction.
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-8 text-stone-300">
               Connect Strava, return to BRAVA, and be ready to import real routes, ride history and future line matches without dealing with file workflows every time.

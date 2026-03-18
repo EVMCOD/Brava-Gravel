@@ -4,9 +4,9 @@ import { chapters, featuredRides, routeHighlights, stats } from "@/lib/mock-data
 import { lines as lineHighlights } from "@/lib/lines-data";
 
 const featurePillars = [
-  "Discover beautiful gravel routes with real metadata.",
-  "Join public rides with RSVP and clear ride expectations.",
-  "Build local chapters around cities, cafés and bike shops.",
+  "Discover Costa Brava and Girona gravel routes with real metadata.",
+  "Join public rides with clear meetup points, pace and route stats.",
+  "Build local chapters around Girona, cafés and bike shops.",
   "Share photos, stories and ride culture — not just numbers.",
 ];
 
@@ -42,16 +42,16 @@ export default function Home() {
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <Link
-              href="/upload"
+              href="/builder"
               className="inline-flex items-center justify-center rounded-full bg-[#c38b43] px-6 py-3 text-sm font-semibold text-[#1f1c19] transition hover:bg-[#d7b98e]"
             >
-              Upload GPX route
+              Build a Costa Brava route
             </Link>
             <Link
-              href="/lines"
+              href="/integrations"
               className="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40"
             >
-              Explore BRAVA Lines
+              Connect Strava
             </Link>
           </div>
 

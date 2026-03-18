@@ -18,8 +18,8 @@ export default async function IntegrationsPage({
     <SiteShell>
       <PageIntro
         eyebrow="Integrations"
-        title="Connect BRAVA to Strava and future GPS providers"
-        description="A clean, low-friction connection flow for bringing real activities, routes and ride history into BRAVA from Strava and, later, other GPS platforms."
+        title="Connect Strava and bring Costa Brava rides into BRAVA"
+        description="A clean, low-friction connection flow for bringing real activities, local routes and ride history into BRAVA from Strava and, later, other GPS platforms."
       />
       <section className="space-y-6 px-6 pb-10 sm:px-8 lg:px-10">
         <IntegrationsPanel

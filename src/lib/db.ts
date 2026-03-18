@@ -47,6 +47,21 @@ database.exec(`
     FOREIGN KEY (user_id) REFERENCES users(id)
   );
 
+  CREATE TABLE IF NOT EXISTS rides (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    route_id TEXT NOT NULL,
+    title TEXT NOT NULL,
+    meetup_at TEXT NOT NULL,
+    meetup_point TEXT NOT NULL,
+    pace_label TEXT NOT NULL,
+    capacity INTEGER NOT NULL,
+    notes TEXT,
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (route_id) REFERENCES uploaded_routes(id)
+  );
+
   CREATE TABLE IF NOT EXISTS uploaded_routes (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
@@ -124,6 +139,19 @@ export type ImportedActivity = {
   elevation_gain_m: number;
   activity_date: string;
   route_points: string;
+  created_at: string;
+};
+
+export type RideRecord = {
+  id: string;
+  user_id: string;
+  route_id: string;
+  title: string;
+  meetup_at: string;
+  meetup_point: string;
+  pace_label: string;
+  capacity: number;
+  notes: string | null;
   created_at: string;
 };
 
@@ -227,6 +255,29 @@ export function listImportedActivities(userId: string): ImportedActivity[] {
   `);
 
   return statement.all(userId) as ImportedActivity[];
+}
+
+export function insertRide(ride: RideRecord) {
+  const statement = database.prepare(`
+    INSERT INTO rides (
+      id, user_id, route_id, title, meetup_at, meetup_point, pace_label, capacity, notes, created_at
+    ) VALUES (
+      @id, @user_id, @route_id, @title, @meetup_at, @meetup_point, @pace_label, @capacity, @notes, @created_at
+    )
+  `);
+
+  statement.run(ride);
+}
+
+export function listRides(userId: string): RideRecord[] {
+  const statement = database.prepare(`
+    SELECT *
+    FROM rides
+    WHERE user_id = ?
+    ORDER BY datetime(meetup_at) ASC
+  `);
+
+  return statement.all(userId) as RideRecord[];
 }
 
 export function insertUploadedRoute(route: StoredRoute) {

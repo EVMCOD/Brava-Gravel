@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { buildGpxDocument } from "@/lib/gpx-export";
 
@@ -12,6 +13,16 @@ const RouteBuilderMap = dynamic(
 type Coordinate = {
   lat: number;
   lon: number;
+};
+
+type SaveRouteResponse = {
+  success: boolean;
+  data?: {
+    routeId: string;
+    name: string;
+    distanceKm: number;
+  };
+  error?: string | null;
 };
 
 const EARTH_RADIUS_M = 6371000;
@@ -37,6 +48,8 @@ export function RouteBuilder() {
   const [routeName, setRouteName] = useState("BRAVA Custom Route");
   const [coordinates, setCoordinates] = useState<Coordinate[]>([]);
   const [status, setStatus] = useState("Click on the map to start drawing your route.");
+  const [savedRouteId, setSavedRouteId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
   const distanceKm = useMemo(() => {
     let totalMeters = 0;
@@ -58,7 +71,41 @@ export function RouteBuilder() {
 
   function clearRoute() {
     setCoordinates([]);
+    setSavedRouteId(null);
     setStatus("Route cleared.");
+  }
+
+  async function saveRoute() {
+    if (coordinates.length < 2) {
+      setStatus("Add at least two points before saving.");
+      return;
+    }
+
+    setSaving(true);
+    setStatus("Saving route into BRAVA...");
+
+    const response = await fetch("/api/builder/save/route", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        routeName,
+        coordinates,
+      }),
+    });
+
+    const json = (await response.json()) as SaveRouteResponse;
+
+    if (!response.ok || !json.success || !json.data) {
+      setStatus(json.error ?? "Could not save route.");
+      setSaving(false);
+      return;
+    }
+
+    setSavedRouteId(json.data.routeId);
+    setStatus(`Route saved: ${json.data.name} (${json.data.distanceKm} km).`);
+    setSaving(false);
   }
 
   function exportGpx() {
@@ -113,8 +160,16 @@ export function RouteBuilder() {
           <div className="mt-6 flex flex-col gap-3">
             <button
               type="button"
+              onClick={saveRoute}
+              disabled={saving}
+              className="inline-flex items-center justify-center rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {saving ? "Saving..." : "Save route to BRAVA"}
+            </button>
+            <button
+              type="button"
               onClick={exportGpx}
-              className="inline-flex items-center justify-center rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-stone-800"
+              className="inline-flex items-center justify-center rounded-full border border-stone-300 px-5 py-3 text-sm font-semibold text-stone-900 transition hover:border-stone-900"
             >
               Export GPX
             </button>
@@ -135,14 +190,31 @@ export function RouteBuilder() {
           </div>
 
           <p className="mt-4 text-sm text-stone-500">{status}</p>
+
+          {savedRouteId ? (
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href={`/routes/${savedRouteId}`}
+                className="inline-flex items-center justify-center rounded-full bg-[#c38b43] px-5 py-3 text-sm font-semibold text-[#1f1c19]"
+              >
+                View saved route
+              </Link>
+              <Link
+                href={`/rides/new?routeId=${savedRouteId}`}
+                className="inline-flex items-center justify-center rounded-full border border-stone-300 px-5 py-3 text-sm font-semibold text-stone-900"
+              >
+                Create ride from route
+              </Link>
+            </div>
+          ) : null}
         </article>
 
         <article className="rounded-[30px] border border-black/5 bg-[#fffaf2] p-6 shadow-sm">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-stone-500">Why this matters</p>
           <ul className="mt-4 space-y-3 text-sm leading-7 text-stone-600">
             <li>Create your own gravel route from scratch.</li>
-            <li>Export it to GPX for Garmin, Wahoo or planning apps.</li>
-            <li>Use the route later to create a BRAVA ride.</li>
+            <li>Save it inside BRAVA, not only export it.</li>
+            <li>Turn that route into a social ride instantly.</li>
             <li>Future version: snap to gravel roads and estimate surface quality.</li>
           </ul>
         </article>

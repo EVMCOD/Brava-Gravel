@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PageIntro, SiteShell } from "@/components/site-shell";
+import { RouteLineMatches } from "@/components/route-line-matches";
 import { RouteMapPanel } from "@/components/route-map-panel";
 import { RouteTransferPanel } from "@/components/route-transfer-panel";
+import { PageIntro, SiteShell } from "@/components/site-shell";
+import { matchLinesFromCoordinates } from "@/lib/line-matching";
 import { deserializeCoordinates } from "@/lib/route-geometry";
 
 async function getRoute(id: string) {
@@ -27,13 +29,14 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ id
   }
 
   const coordinates = deserializeCoordinates(route.route_points);
+  const matches = matchLinesFromCoordinates(coordinates);
 
   return (
     <SiteShell>
       <PageIntro
         eyebrow="Route detail"
         title={route.name}
-        description="This detail page is the next real product step: saved route metadata, geometry and future line detection around uploaded GPS tracks."
+        description="This detail page is the next real product step: saved route metadata, geometry, transfer options and initial BRAVA Line detection around uploaded GPS tracks."
       />
       <section className="grid gap-6 px-6 pb-10 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:px-10">
         <div className="grid gap-6">
@@ -58,6 +61,7 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ id
           </article>
 
           <RouteTransferPanel routeId={route.id} />
+          <RouteLineMatches matches={matches} />
         </div>
 
         <article className="rounded-[30px] border border-white/10 bg-white p-6 shadow-sm text-stone-900">

@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { Language } from "@/lib/i18n";
 
-type Language = "en" | "es";
 type Theme = "light" | "dark";
 
 type UiStateContextValue = {

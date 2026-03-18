@@ -1,19 +1,26 @@
+"use client";
+
 import Link from "next/link";
 import { ReactNode } from "react";
 import { UiControlsSlot } from "@/components/ui-controls-slot";
-
-const navigation = [
-  { href: "/", label: "Home" },
-  { href: "/routes", label: "Routes" },
-  { href: "/lines", label: "Lines" },
-  { href: "/rides", label: "Rides" },
-  { href: "/upload", label: "Upload GPX" },
-  { href: "/builder", label: "Builder" },
-  { href: "/integrations", label: "Integrations" },
-  { href: "/profile", label: "Profile" },
-];
+import { useUiState } from "@/components/ui-state";
+import { t } from "@/lib/i18n";
 
 export function SiteShell({ children }: { children: ReactNode }) {
+  const { language } = useUiState();
+  const copy = t(language);
+
+  const navigation = [
+    { href: "/", label: copy.nav.home },
+    { href: "/routes", label: copy.nav.routes },
+    { href: "/lines", label: copy.nav.lines },
+    { href: "/rides", label: copy.nav.rides },
+    { href: "/upload", label: copy.nav.upload },
+    { href: "/builder", label: copy.nav.builder },
+    { href: "/integrations", label: copy.nav.integrations },
+    { href: "/profile", label: copy.nav.profile },
+  ];
+
   return (
     <main className="min-h-screen bg-[var(--app-bg)] text-[var(--app-fg)] transition-colors">
       <div className="mx-auto max-w-7xl px-6 py-6 sm:px-10 lg:px-12">
@@ -26,7 +33,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 </div>
                 <div>
                   <p className="text-lg font-semibold tracking-[0.2em] text-white">BRAVA GRAVEL</p>
-                  <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Ride beautiful. Ride together.</p>
+                  <p className="text-xs uppercase tracking-[0.24em] text-stone-400">{copy.shell.tagline}</p>
                 </div>
               </Link>
             </div>

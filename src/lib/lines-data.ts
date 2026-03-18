@@ -6,19 +6,19 @@ export type LineGeometryPoint = {
 export const lines = [
   {
     id: "line_1",
-    name: "La Tapia Sector",
-    area: "Casa de Campo",
-    region: "Madrid",
+    name: "Begur Cliff Sector",
+    area: "Begur",
+    region: "Costa Brava",
     length: "2.8 km",
     grade: "3.2% avg",
     surface: "Hardpack gravel",
     overview:
-      "A fast rolling sector used by local riders to benchmark repeatable power over mixed hardpack terrain.",
+      "A rolling Costa Brava sector with sea air, compact gravel and enough speed to create repeatable efforts.",
     geometry: [
-      { lat: 40.414, lon: -3.751 },
-      { lat: 40.416, lon: -3.748 },
-      { lat: 40.419, lon: -3.744 },
-      { lat: 40.421, lon: -3.741 },
+      { lat: 41.956, lon: 3.208 },
+      { lat: 41.959, lon: 3.211 },
+      { lat: 41.963, lon: 3.216 },
+      { lat: 41.967, lon: 3.221 },
     ] as LineGeometryPoint[],
     leaderboard: [
       { rank: 1, rider: "Javier R.", time: "02:41" },
@@ -28,19 +28,19 @@ export const lines = [
   },
   {
     id: "line_2",
-    name: "Mirador Dust Climb",
-    area: "Cercedilla",
-    region: "Madrid",
+    name: "Banyoles Dust Climb",
+    area: "Banyoles",
+    region: "Girona",
     length: "4.6 km",
     grade: "5.8% avg",
     surface: "Loose gravel",
     overview:
-      "A decisive climbing line with loose corners and enough vertical to justify a proper crown battle.",
+      "A punchy Girona gravel climb with loose corners and enough vertical to justify a proper crown battle.",
     geometry: [
-      { lat: 40.737, lon: -4.056 },
-      { lat: 40.739, lon: -4.053 },
-      { lat: 40.742, lon: -4.049 },
-      { lat: 40.745, lon: -4.045 },
+      { lat: 42.123, lon: 2.754 },
+      { lat: 42.126, lon: 2.759 },
+      { lat: 42.129, lon: 2.765 },
+      { lat: 42.132, lon: 2.771 },
     ] as LineGeometryPoint[],
     leaderboard: [
       { rank: 1, rider: "Marta V.", time: "11:08" },
@@ -50,19 +50,19 @@ export const lines = [
   },
   {
     id: "line_3",
-    name: "Barranco White Road",
-    area: "Alicante",
-    region: "Alicante",
+    name: "Cap de Creus Wind Road",
+    area: "Cadaqués",
+    region: "Costa Brava",
     length: "6.1 km",
     grade: "1.4% avg",
     surface: "Fast rolling gravel",
     overview:
-      "An exposed speed line where positioning and wind matter as much as watts.",
+      "An exposed speed line where Mediterranean wind matters as much as watts.",
     geometry: [
-      { lat: 38.347, lon: -0.492 },
-      { lat: 38.351, lon: -0.489 },
-      { lat: 38.356, lon: -0.485 },
-      { lat: 38.361, lon: -0.479 },
+      { lat: 42.289, lon: 3.286 },
+      { lat: 42.293, lon: 3.291 },
+      { lat: 42.297, lon: 3.298 },
+      { lat: 42.301, lon: 3.305 },
     ] as LineGeometryPoint[],
     leaderboard: [
       { rank: 1, rider: "Pau M.", time: "08:55" },

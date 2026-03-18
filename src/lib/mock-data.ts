@@ -7,25 +7,25 @@ export const stats = [
 
 export const featuredRides = [
   {
-    title: "Dawn Patrol Madrid",
+    title: "Begur Sunrise Gravel",
     date: "Saturday · 08:00",
-    location: "Casa de Campo",
+    location: "Begur",
     distance: "64 km",
     vibe: "Fast social",
     riders: 18,
   },
   {
-    title: "Dust & Climb Session",
+    title: "Banyoles Dust & Climb",
     date: "Sunday · 07:30",
-    location: "Cercedilla",
+    location: "Banyoles",
     distance: "82 km",
     vibe: "Challenge ride",
     riders: 11,
   },
   {
-    title: "Coffee Loop Valencia",
+    title: "Calella Coffee Loop",
     date: "Saturday · 09:00",
-    location: "L'Eliana",
+    location: "Palafrugell",
     distance: "47 km",
     vibe: "Open pace",
     riders: 26,
@@ -35,24 +35,24 @@ export const featuredRides = [
 export const routeHighlights = [
   {
     id: "route_1",
-    name: "Jarama White Line",
-    region: "Madrid",
+    name: "Begur White Roads",
+    region: "Costa Brava",
     distance: "58 km",
     elevation: "780 m+",
     terrain: "72% gravel · 28% road",
   },
   {
     id: "route_2",
-    name: "Montserrat Dust Line",
-    region: "Barcelona",
+    name: "Banyoles Lake Escape",
+    region: "Girona",
     distance: "71 km",
     elevation: "1,120 m+",
     terrain: "64% gravel · 36% trail",
   },
   {
     id: "route_3",
-    name: "Costa Blanca Escape",
-    region: "Alicante",
+    name: "Cap de Creus Wind Line",
+    region: "Costa Brava",
     distance: "92 km",
     elevation: "640 m+",
     terrain: "55% gravel · 45% road",
@@ -61,48 +61,18 @@ export const routeHighlights = [
 
 export const chapters = [
   {
-    name: "BRAVA Madrid",
+    name: "BRAVA Girona",
     members: 214,
     text: "Weekly gravel rides, solid pace, no ego, mandatory coffee stop.",
   },
   {
-    name: "BRAVA Catalunya",
+    name: "BRAVA Costa Brava",
     members: 167,
-    text: "Long routes, mixed terrain, mountain legs and real community.",
+    text: "Sea views, white roads, punchy climbs and local gravel culture.",
   },
   {
-    name: "BRAVA Levante",
+    name: "BRAVA Empordà",
     members: 96,
-    text: "Sunset rides, coast loops and good social energy after work.",
-  },
-];
-
-export const lineHighlights = [
-  {
-    id: "line_1",
-    name: "La Tapia Sector",
-    area: "Casa de Campo",
-    length: "2.8 km",
-    grade: "3.2% avg",
-    surface: "Hardpack gravel",
-    leader: "02:41 · Javier R.",
-  },
-  {
-    id: "line_2",
-    name: "Mirador Dust Climb",
-    area: "Cercedilla",
-    length: "4.6 km",
-    grade: "5.8% avg",
-    surface: "Loose gravel",
-    leader: "11:08 · Marta V.",
-  },
-  {
-    id: "line_3",
-    name: "Barranco White Road",
-    area: "Alicante",
-    length: "6.1 km",
-    grade: "1.4% avg",
-    surface: "Fast rolling gravel",
-    leader: "08:55 · Pau M.",
+    text: "Mixed terrain, rolling farm roads and social loops around the region.",
   },
 ];

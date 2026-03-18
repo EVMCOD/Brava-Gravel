@@ -27,7 +27,7 @@ export function RouteBuilderMap({
 }) {
   const center = coordinates.length > 0
     ? ([coordinates[0].lat, coordinates[0].lon] as [number, number])
-    : ([40.4168, -3.7038] as [number, number]);
+    : ([41.9794, 3.1318] as [number, number]);
 
   return (
     <div className="overflow-hidden rounded-[28px] border border-stone-200">

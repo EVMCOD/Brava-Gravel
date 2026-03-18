@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SiteShell } from "@/components/site-shell";
-import { chapters, featuredRides, lineHighlights, routeHighlights, stats } from "@/lib/mock-data";
+import { chapters, featuredRides, routeHighlights, stats } from "@/lib/mock-data";
+import { lines as lineHighlights } from "@/lib/lines-data";
 
 const featurePillars = [
   "Discover beautiful gravel routes with real metadata.",
@@ -31,10 +32,10 @@ export default function Home() {
 
           <div className="space-y-5">
             <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
-              A more beautiful social home for the gravel world.
+              Costa Brava gravel, social rides and local routes in one place.
             </h1>
             <p className="max-w-2xl text-base leading-8 text-stone-300 sm:text-lg">
-              BRAVA GRAVEL is a community-first cycling platform built for route discovery,
+              BRAVA GRAVEL is a Girona and Costa Brava-first cycling platform built for route discovery,
               social rides, local chapters and GPS-backed uploads — not just activity tracking.
             </p>
           </div>
@@ -67,9 +68,9 @@ export default function Home() {
         <div className="flex flex-col gap-5">
           <article className="rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04))] p-6 backdrop-blur">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d7b98e]">Functional next step</p>
-            <h3 className="mt-4 text-3xl font-semibold tracking-tight text-white">GPS uploads are already in the product</h3>
+            <h3 className="mt-4 text-3xl font-semibold tracking-tight text-white">Built around Girona and the Costa Brava</h3>
             <p className="mt-3 text-sm leading-7 text-stone-300">
-              We already support GPX upload parsing so the next step is persistence, map rendering and segment matching. That gives us a real bridge from static brand site into usable product.
+              BRAVA should feel local first: gravel roads around Begur, Girona, Banyoles and the Empordà, with routes and social rides that make sense for this region.
             </p>
             <div className="mt-6 grid grid-cols-2 gap-3 text-sm text-stone-200">
               <div className="rounded-2xl border border-white/10 bg-black/10 p-4">
@@ -104,8 +105,8 @@ export default function Home() {
         <article className="rounded-[32px] border border-black/5 bg-white p-6 shadow-sm sm:p-8">
           <SectionHeader
             label="Positioning"
-            title="Not another Strava clone"
-            text="The wedge is simple: make gravel culture easier to discover, join and share. Routes, rides and community first. Hardcore tracking later."
+            title="Costa Brava and Girona first"
+            text="The wedge is simple: make gravel culture easier to discover, join and share around Girona and the Costa Brava. Routes, rides and local community first. Hardcore tracking later."
           />
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {featurePillars.map((item) => (
@@ -167,7 +168,7 @@ export default function Home() {
                 <p><span className="font-medium text-stone-900">Length:</span> {line.length}</p>
                 <p><span className="font-medium text-stone-900">Grade:</span> {line.grade}</p>
                 <p><span className="font-medium text-stone-900">Surface:</span> {line.surface}</p>
-                <p><span className="font-medium text-stone-900">Leader:</span> {line.leader}</p>
+                <p><span className="font-medium text-stone-900">Leader:</span> {line.leaderboard[0]?.time} · {line.leaderboard[0]?.rider}</p>
               </div>
             </article>
           ))}

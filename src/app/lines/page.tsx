@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { PageIntro, SiteShell } from "@/components/site-shell";
-import { lineHighlights } from "@/lib/mock-data";
+import { lines } from "@/lib/lines-data";
 
 export default function LinesPage() {
   return (
@@ -10,7 +11,7 @@ export default function LinesPage() {
         description="BRAVA Lines is the future segments layer: iconic gravel sectors, route overlays, KOM-style rankings and community notes around each effort."
       />
       <section className="grid gap-5 px-6 pb-10 sm:px-8 lg:grid-cols-3 lg:px-10">
-        {lineHighlights.map((line) => (
+        {lines.map((line) => (
           <article key={line.id} className="rounded-[30px] border border-white/10 bg-[#fffaf2] p-6 shadow-sm text-stone-900">
             <p className="text-sm font-medium text-stone-500">{line.area}</p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight">{line.name}</h2>
@@ -18,8 +19,14 @@ export default function LinesPage() {
               <p><span className="font-medium text-stone-900">Length:</span> {line.length}</p>
               <p><span className="font-medium text-stone-900">Grade:</span> {line.grade}</p>
               <p><span className="font-medium text-stone-900">Surface:</span> {line.surface}</p>
-              <p><span className="font-medium text-stone-900">Leader:</span> {line.leader}</p>
+              <p><span className="font-medium text-stone-900">Leader:</span> {line.leaderboard[0]?.time} · {line.leaderboard[0]?.rider}</p>
             </div>
+            <Link
+              href={`/lines/${line.id}`}
+              className="mt-5 inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-900 transition hover:border-stone-900"
+            >
+              View line
+            </Link>
           </article>
         ))}
       </section>

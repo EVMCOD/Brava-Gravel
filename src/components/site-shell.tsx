@@ -7,6 +7,7 @@ const navigation = [
   { href: "/lines", label: "Lines" },
   { href: "/rides", label: "Rides" },
   { href: "/upload", label: "Upload GPX" },
+  { href: "/profile", label: "Profile" },
 ];
 
 export function SiteShell({ children }: { children: ReactNode }) {

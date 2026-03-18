@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
-import { insertUploadedRoute, listUploadedRoutes } from "@/lib/db";
+import { getDefaultUser, insertUploadedRoute, listUploadedRoutes } from "@/lib/db";
 import { parseGpxSummary } from "@/lib/gpx";
 import { extractCompressedCoordinates, serializeCoordinates } from "@/lib/route-geometry";
 
@@ -35,8 +35,11 @@ export async function POST(request: Request) {
     );
   }
 
+  const defaultUser = getDefaultUser();
+
   const record = {
     id: randomUUID(),
+    user_id: defaultUser.id,
     name: routeName ?? gpxFile.name.replace(/\.gpx$/i, ""),
     file_name: gpxFile.name,
     point_count: summary.pointCount,

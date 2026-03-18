@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { getDefaultUser, insertUploadedRoute, listUploadedRoutes } from "@/lib/db";

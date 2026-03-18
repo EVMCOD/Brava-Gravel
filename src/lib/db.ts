@@ -128,6 +128,17 @@ export function getDefaultUser(): UserRecord {
   return statement.get() as UserRecord;
 }
 
+export function getExternalConnectionByProvider(userId: string, provider: string): ExternalConnection | null {
+  const statement = database.prepare(`
+    SELECT *
+    FROM external_connections
+    WHERE user_id = ? AND provider = ?
+    LIMIT 1
+  `);
+
+  return (statement.get(userId, provider) as ExternalConnection | undefined) ?? null;
+}
+
 export function listExternalConnections(userId: string): ExternalConnection[] {
   const statement = database.prepare(`
     SELECT *

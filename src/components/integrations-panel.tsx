@@ -19,8 +19,25 @@ type Connection = {
   updated_at: string;
 };
 
-export function IntegrationsPanel({ connections }: { connections: Connection[] }) {
-  const [status, setStatus] = useState("Connect Strava in one click and start bringing real rides into BRAVA.");
+const statusMessages: Record<string, string> = {
+  strava_connected: "Strava connected successfully. BRAVA can now start working with your real rides.",
+  strava_denied: "Strava permission was denied. You can try connecting again anytime.",
+  strava_missing_code: "Strava returned without an authorization code.",
+  strava_error: "Strava connection failed during token exchange. Check your client settings and try again.",
+};
+
+export function IntegrationsPanel({
+  connections,
+  initialStatus,
+}: {
+  connections: Connection[];
+  initialStatus?: string;
+}) {
+  const [status, setStatus] = useState(
+    initialStatus && statusMessages[initialStatus]
+      ? statusMessages[initialStatus]
+      : "Connect Strava in one click and start bringing real rides into BRAVA.",
+  );
   const [connecting, setConnecting] = useState(false);
 
   const stravaConnection = useMemo(

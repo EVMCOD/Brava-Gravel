@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ReactNode } from "react";
+import { AuthControls } from "@/components/auth-controls";
 import { UiControlsSlot } from "@/components/ui-controls-slot";
 import { useUiState } from "@/components/ui-state";
 import { t } from "@/lib/i18n";
@@ -38,7 +39,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
               </Link>
             </div>
             <div className="flex flex-col gap-4 lg:items-end">
-              <UiControlsSlot />
+              <div className="flex flex-wrap items-center gap-3">
+                <AuthControls />
+                <UiControlsSlot />
+              </div>
               <div className="flex flex-wrap items-center gap-4 text-sm text-stone-300">
                 {navigation.map((item) => (
                   <Link key={item.href} href={item.href} className="transition hover:text-white">

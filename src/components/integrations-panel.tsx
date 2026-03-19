@@ -20,8 +20,8 @@ type Connection = {
 };
 
 const statusMessages: Record<string, string> = {
-  strava_connected: "Strava connected successfully. BRAVA can now start working with your real rides.",
-  strava_denied: "Strava permission was denied. You can try connecting again anytime.",
+  strava_connected: "Strava connected. You can now bring your recent rides into BRAVA.",
+  strava_denied: "Strava permission was denied. You can try again whenever you want.",
   strava_missing_code: "Strava returned without an authorization code.",
   strava_error: "Strava connection failed during token exchange. Check your client settings and try again.",
 };
@@ -36,7 +36,7 @@ export function IntegrationsPanel({
   const [status, setStatus] = useState(
     initialStatus && statusMessages[initialStatus]
       ? statusMessages[initialStatus]
-      : "Connect Strava in one click and start bringing real rides into BRAVA.",
+      : "Connect Strava in one click and start bringing your real rides into BRAVA.",
   );
   const [connecting, setConnecting] = useState(false);
 
@@ -64,7 +64,7 @@ export function IntegrationsPanel({
     }
 
     if (!json.data.configured || !json.data.authorizeUrl) {
-      setStatus("Almost ready: add STRAVA_CLIENT_ID and STRAVA_REDIRECT_URI to finish the one-click flow.");
+      setStatus("Almost ready: add the Strava app variables and this flow will be fully live.");
       setConnecting(false);
       return;
     }
@@ -79,10 +79,10 @@ export function IntegrationsPanel({
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d7b98e]">Simple connection flow</p>
             <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">
-              Bring your real Girona and Costa Brava rides into BRAVA with almost no friction.
+              Bring your real Girona and Costa Brava rides into BRAVA.
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-8 text-stone-300">
-              Connect Strava, return to BRAVA, and be ready to import real routes, ride history and future line matches without dealing with file workflows every time.
+              Connect Strava, return to BRAVA, and keep your ride history, routes and future line matches in one place.
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -98,7 +98,7 @@ export function IntegrationsPanel({
                 href="/upload"
                 className="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40"
               >
-                Upload files instead
+                Upload route files
               </a>
             </div>
 
@@ -118,7 +118,7 @@ export function IntegrationsPanel({
                 <li>1. Connect your Strava account</li>
                 <li>2. Return to BRAVA automatically</li>
                 <li>3. Import recent rides and routes</li>
-                <li>4. Match activity against BRAVA Lines</li>
+                <li>4. Build a local ride plan around them</li>
               </ul>
             </div>
           </div>
@@ -127,7 +127,7 @@ export function IntegrationsPanel({
 
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <article className="rounded-[30px] border border-black/5 bg-white p-6 shadow-sm">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-stone-500">Designed for low friction</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-stone-500">Built for low friction</p>
           <div className="mt-5 grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
               <p className="text-sm text-stone-500">Step 1</p>
@@ -139,7 +139,7 @@ export function IntegrationsPanel({
             </div>
             <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
               <p className="text-sm text-stone-500">Step 3</p>
-              <p className="mt-2 text-base font-semibold text-stone-950">Import real rides</p>
+              <p className="mt-2 text-base font-semibold text-stone-950">Import your rides</p>
             </div>
           </div>
         </article>
@@ -167,7 +167,7 @@ export function IntegrationsPanel({
               ))
             ) : (
               <p className="text-sm leading-7 text-stone-600">
-                No providers linked yet. Start with Strava so BRAVA can work with real routes and activity history.
+                No providers linked yet. Start with Strava and bring in your real rides first.
               </p>
             )}
           </div>

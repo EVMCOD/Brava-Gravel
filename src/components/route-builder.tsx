@@ -45,9 +45,9 @@ function distanceBetween(a: Coordinate, b: Coordinate) {
 }
 
 export function RouteBuilder() {
-  const [routeName, setRouteName] = useState("BRAVA Custom Route");
+  const [routeName, setRouteName] = useState("Costa Brava Morning Loop");
   const [coordinates, setCoordinates] = useState<Coordinate[]>([]);
-  const [status, setStatus] = useState("Click on the map to start drawing your route.");
+  const [status, setStatus] = useState("Click on the map to sketch your route through Girona or the Costa Brava.");
   const [savedRouteId, setSavedRouteId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -61,7 +61,7 @@ export function RouteBuilder() {
 
   function addPoint(coordinate: Coordinate) {
     setCoordinates((current) => [...current, coordinate]);
-    setStatus("Point added to route.");
+    setStatus("Point added. Keep sketching the route.");
   }
 
   function undoLastPoint() {
@@ -72,12 +72,12 @@ export function RouteBuilder() {
   function clearRoute() {
     setCoordinates([]);
     setSavedRouteId(null);
-    setStatus("Route cleared.");
+    setStatus("Route cleared. Start again whenever you want.");
   }
 
   async function saveRoute() {
     if (coordinates.length < 2) {
-      setStatus("Add at least two points before saving.");
+      setStatus("Add at least two points before saving your route.");
       return;
     }
 
@@ -128,7 +128,10 @@ export function RouteBuilder() {
   return (
     <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
       <article className="rounded-[30px] border border-black/5 bg-white p-6 shadow-sm">
-        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-stone-500">Builder map</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-stone-500">Builder map</p>
+          <span className="text-sm text-stone-400">{coordinates.length} points</span>
+        </div>
         <div className="mt-5">
           <RouteBuilderMap coordinates={coordinates} onAddPoint={addPoint} />
         </div>
@@ -210,11 +213,11 @@ export function RouteBuilder() {
         </article>
 
         <article className="rounded-[30px] border border-black/5 bg-[#fffaf2] p-6 shadow-sm">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-stone-500">Why this matters</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-stone-500">What this unlocks</p>
           <ul className="mt-4 space-y-3 text-sm leading-7 text-stone-600">
-            <li>Create your own gravel route from scratch.</li>
-            <li>Save it inside BRAVA, not only export it.</li>
-            <li>Turn that route into a social ride instantly.</li>
+            <li>Sketch your own gravel route around Girona or the coast.</li>
+            <li>Save it inside BRAVA instead of leaving it as a loose GPX file.</li>
+            <li>Turn that route into a social ride with one more step.</li>
             <li>Future version: snap to gravel roads and estimate surface quality.</li>
           </ul>
         </article>

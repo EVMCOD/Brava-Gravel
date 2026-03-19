@@ -10,8 +10,8 @@ export default function RidesPage() {
     <SiteShell>
       <PageIntro
         eyebrow="Rides"
-        title="Social rides built around route, pace and meetup"
-        description="A real MVP list of BRAVA rides with route stats, meetup details and enough structure to start validating the social planning loop."
+        title="Local rides built around route, pace and meetup"
+        description="A clean MVP list of BRAVA rides with route stats, meetup details and enough structure to validate the social planning loop." 
       />
       <section className="grid gap-5 px-6 pb-10 sm:px-8 lg:grid-cols-3 lg:px-10">
         {rides.length > 0 ? (
@@ -36,8 +36,14 @@ export default function RidesPage() {
             </article>
           ))
         ) : (
-          <article className="rounded-[30px] border border-white/10 bg-white p-6 shadow-sm text-stone-900 lg:col-span-3">
-            <p className="text-sm leading-7 text-stone-600">No rides created yet. Use the Builder or a saved route to create your first BRAVA ride.</p>
+          <article className="rounded-[30px] border border-white/10 bg-white p-8 shadow-sm text-stone-900 lg:col-span-3">
+            <p className="text-lg font-semibold text-stone-950">No rides yet.</p>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-600">
+              Start with the Builder, sketch a local route and turn it into your first BRAVA social ride.
+            </p>
+            <Link href="/builder" className="mt-5 inline-flex rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-stone-800">
+              Open Builder
+            </Link>
           </article>
         )}
       </section>

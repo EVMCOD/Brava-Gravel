@@ -97,8 +97,8 @@ export default function Home() {
             <p className="text-xs font-semibold uppercase tracking-[0.28em]">Brand direction</p>
             <p className="mt-3 text-lg font-semibold tracking-tight">
               {language === "es"
-                ? "Estética outdoor premium, feeling editorial y una identidad muy ligada al gravel mediterráneo."
-                : "Premium outdoor aesthetic, editorial feel and a brand tied to Mediterranean gravel culture."}
+                ? "Una marca pensada para rutas bonitas, salidas con amigos y la cultura gravel que se vive entre Girona, el Empordà y la Costa Brava."
+                : "A brand built for beautiful routes, rides with friends and the gravel culture that lives between Girona, the Empordà and the Costa Brava."}
             </p>
           </article>
         </div>
@@ -182,7 +182,7 @@ export default function Home() {
         <SectionHeader
           label={language === "es" ? "Salidas" : "Rides"}
           title={language === "es" ? "Únete a salidas locales con buena pinta" : "Join beautiful local rides"}
-          text={language === "es" ? "La superficie más importante del producto: descubrir salidas reales con mood, nivel y promesa social clara." : "The most important surface in the product: discovery of real rides with a clear mood, level and social promise."}
+          text={language === "es" ? "La parte más importante del producto: descubrir salidas reales con punto de encuentro, ritmo claro y ganas de volver a rodar en grupo." : "The most important surface in the product: discovery of real rides with a clear mood, level and social promise."}
         />
         <div className="grid gap-5 lg:grid-cols-3">
           {featuredRides.map((ride) => (
@@ -209,7 +209,7 @@ export default function Home() {
           <SectionHeader
             label={language === "es" ? "Capítulos locales" : "Local chapters"}
             title={language === "es" ? "Comunidad basada en territorio" : "City-based communities"}
-            text={language === "es" ? "Aquí es donde nacen la retención y la identidad. La gente vuelve por los grupos, las salidas recurrentes y el sentimiento local." : "This is where retention and identity come from. People stay for groups, recurring rides and local belonging."}
+            text={language === "es" ? "Aquí es donde nace el vínculo real con el producto: grupos locales, salidas recurrentes y una escena propia alrededor de Girona y la Costa Brava." : "This is where retention and identity come from. People stay for groups, recurring rides and local belonging."}
           />
         </article>
 

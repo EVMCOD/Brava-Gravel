@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { AuthControls } from "@/components/auth-controls";
 
 const navigation = [
   { href: "/", label: "Home" },
@@ -30,17 +29,12 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 </div>
               </Link>
             </div>
-            <div className="flex flex-col gap-4 lg:items-end">
-              <div className="flex flex-wrap items-center gap-3">
-                <AuthControls />
-              </div>
-              <div className="flex flex-wrap items-center gap-4 text-sm text-stone-300">
-                {navigation.map((item) => (
-                  <Link key={item.href} href={item.href} className="transition hover:text-white">
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
+            <div className="flex flex-wrap items-center gap-4 text-sm text-stone-300">
+              {navigation.map((item) => (
+                <Link key={item.href} href={item.href} className="transition hover:text-white">
+                  {item.label}
+                </Link>
+              ))}
             </div>
           </nav>
           {children}
